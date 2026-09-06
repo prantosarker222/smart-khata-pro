@@ -1,4 +1,4 @@
-﻿package com.gher.smartkhata;
+package com.gher.smartkhata;
 
 import android.Manifest;
 import android.content.ActivityNotFoundException;
