@@ -1,0 +1,2364 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>ঘেরের স্মার্ট খাতা Pro - Professional ERP</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <style>
+    :root {
+      --primary-color: #064e3b;
+      --accent-color: #10b981;
+      --bg-color: #f1f5f9;
+      --card-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+      --border-color: #cbd5e1;
+      --radius-sm: 6px;
+      --radius-md: 12px;
+      --radius-lg: 18px;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Kalpurush', 'Segoe UI', Arial, sans-serif; }
+    
+    body { 
+      background-color: var(--bg-color); 
+      background: linear-gradient(180deg, #e2e8f0 0%, #f1f5f9 100%);
+      padding: 10px 8px; 
+      color: #0f172a; 
+      -webkit-tap-highlight-color: transparent;
+      user-select: none;
+    }
+
+    .container { 
+      max-width: 650px; 
+      margin: 0 auto; 
+      background: rgba(255, 255, 255, 0.98); 
+      padding: 16px; 
+      border-radius: var(--radius-lg); 
+      box-shadow: var(--card-shadow); 
+      border: 1px solid rgba(255, 255, 255, 0.8); 
+    }
+    
+    .app-header { 
+      display: flex; 
+      justify-content: space-between; 
+      align-items: center; 
+      margin-bottom: 12px; 
+      position: relative;
+      padding-bottom: 8px;
+      border-bottom: 1px solid #e2e8f0;
+    }
+
+    .user-profile-header {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+    }
+
+    .user-avatar-top {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      border: 2px solid var(--primary-color);
+      object-fit: cover;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.15);
+    }
+
+    .user-info-text {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    .user-email-display {
+      font-size: 11px;
+      font-weight: 700;
+      color: #0284c7;
+      line-height: 1.1;
+      max-width: 140px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .app-header h2 { 
+      color: var(--primary-color); 
+      font-size: 18px; 
+      font-weight: 800; 
+      display: flex; 
+      align-items: center; 
+      gap: 6px; 
+    }
+
+    .menu-dropdown-container {
+      position: relative;
+    }
+
+    .three-dot-btn {
+      background: transparent;
+      border: none;
+      font-size: 20px;
+      color: #334155;
+      padding: 6px 10px;
+      cursor: pointer;
+      border-radius: 50%;
+    }
+    .three-dot-btn:hover { background: #e2e8f0; }
+
+    .dropdown-menu {
+      display: none;
+      position: absolute;
+      right: 0;
+      top: 35px;
+      background: #ffffff;
+      min-width: 190px;
+      box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+      border-radius: var(--radius-sm);
+      z-index: 1100;
+      border: 1px solid #cbd5e1;
+      overflow: hidden;
+    }
+
+    .dropdown-menu button {
+      width: 100%;
+      padding: 10px 12px;
+      text-align: left;
+      background: none;
+      border: none;
+      font-size: 12px;
+      font-weight: 700;
+      color: #334155;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .dropdown-menu button:hover { background: #f1f5f9; color: var(--primary-color); }
+    .dropdown-menu button.danger-btn { color: #dc2626; }
+
+    .year-filter-wrapper {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+      background: #ecfdf5;
+      padding: 10px 14px;
+      border-radius: var(--radius-md);
+      border: 1.5px solid #a7f3d0;
+    }
+    .year-filter-wrapper label { font-size: 13px; font-weight: 700; color: #064e3b; }
+    .year-select-dropdown {
+      padding: 6px 12px;
+      border: 1.5px solid #059669;
+      border-radius: var(--radius-sm);
+      font-size: 12px;
+      font-weight: 800;
+      color: #064e3b;
+      background: #ffffff;
+      outline: none;
+    }
+
+    .dashboard { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-bottom: 12px; }
+    .card { 
+      padding: 12px 10px; 
+      border-radius: var(--radius-md); 
+      color: #fff; 
+      text-align: center; 
+      box-shadow: var(--card-shadow); 
+      display: flex; 
+      flex-direction: column; 
+      justify-content: center; 
+      align-items: center; 
+      min-height: 85px; 
+      cursor: pointer;
+      transition: transform 0.2s ease;
+    }
+    .card:active { transform: scale(0.98); }
+    .card .title { font-size: 12px; font-weight: 700; opacity: 0.95; display: flex; align-items: center; gap: 5px; margin-bottom: 4px; }
+    .card .amount { font-size: 17px; font-weight: 800; }
+    
+    .card-details-sub {
+      width: 100%;
+      margin-top: 6px;
+      padding-top: 4px;
+      border-top: 1px dashed rgba(255, 255, 255, 0.4);
+      font-size: 10.5px;
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .bg-sale { background: linear-gradient(135deg, #059669, #10b981); }
+    .bg-exp { background: linear-gradient(135deg, #dc2626, #f87171); }
+    .bg-pona { background: linear-gradient(135deg, #ea580c, #fb923c); }
+    .bg-hari { background: linear-gradient(135deg, #6d28d9, #8b5cf6); }
+    .bg-balance { background: linear-gradient(135deg, #0284c7, #38bdf8); grid-column: span 2; min-height: 70px; cursor: default; }
+
+    .modal { 
+      display: none; 
+      position: fixed; 
+      top: 0; 
+      left: 0; 
+      width: 100%; 
+      height: 100%; 
+      background: #f8fafc;
+      z-index: 1000; 
+      flex-direction: column; 
+    }
+    
+    .modal-header { 
+      display: flex; 
+      justify-content: space-between; 
+      align-items: center; 
+      padding: 12px 10px; 
+      position: relative;
+      background: #064e3b;
+      min-height: 55px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    }
+
+    .back-btn { 
+      background: #0284c7; 
+      color: #fff; 
+      border: 1.5px solid #38bdf8; 
+      padding: 8px 12px; 
+      border-radius: var(--radius-sm); 
+      cursor: pointer; 
+      font-weight: 800; 
+      font-size: 13px; 
+      white-space: nowrap;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      z-index: 2;
+    }
+    
+    .modal-header h3 { 
+      font-size: 15px; 
+      font-weight: 800; 
+      color: #ffffff; 
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      text-align: center;
+      flex: 1;
+      padding: 0 6px;
+      z-index: 2;
+    }
+
+    .home-btn { 
+      background: #ffffff; 
+      color: #064e3b; 
+      border: 1.5px solid #a7f3d0; 
+      padding: 8px 12px; 
+      border-radius: var(--radius-sm); 
+      cursor: pointer; 
+      font-weight: 800; 
+      font-size: 13px; 
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      white-space: nowrap;
+      z-index: 2;
+    }
+
+    .modal-body { padding: 12px 10px; flex: 1; overflow-y: auto; -webkit-overflow-scrolling: touch; }
+    
+    .add-customer-top-btn {
+      width: 100%; 
+      padding: 12px; 
+      background: linear-gradient(135deg, #059669, #10b981); 
+      color: #fff; 
+      border: none; 
+      border-radius: var(--radius-md); 
+      font-weight: 800; 
+      cursor: pointer; 
+      margin-bottom: 10px; 
+      font-size: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .filter-3-grid {
+      display: grid;
+      grid-template-columns: 1.2fr 1fr 1fr;
+      gap: 6px;
+      margin-bottom: 12px;
+    }
+
+    .filter-box {
+      background: #ffffff;
+      border: 1.5px solid #a7f3d0;
+      border-radius: var(--radius-sm);
+      padding: 6px 8px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .filter-box input, .filter-box select {
+      border: none;
+      outline: none;
+      background: transparent;
+      font-size: 11px;
+      font-weight: 700;
+      color: #0f172a;
+      width: 100%;
+    }
+
+    .date-dropdown-panel {
+      display: none;
+      position: absolute;
+      top: 100%;
+      left: 0;
+      right: 0;
+      background: #fff;
+      border: 1.5px solid #059669;
+      border-radius: 8px;
+      padding: 10px;
+      z-index: 100;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+      margin-top: 4px;
+    }
+
+    .summary-overview-box {
+      background: linear-gradient(135deg, #064e3b, #047857);
+      color: #ffffff;
+      padding: 4px 8px;
+      border-radius: var(--radius-sm);
+      font-size: 9.5px;
+      line-height: 1.2;
+    }
+
+    .summary-overview-box div {
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .khata-ledger-card { 
+      border: 1px solid rgba(255, 255, 255, 0.2); 
+      border-radius: var(--radius-md); 
+      padding: 12px; 
+      margin-bottom: 12px; 
+      display: flex; 
+      flex-direction: column;
+      box-shadow: var(--card-shadow);
+      transition: all 0.2s ease;
+      position: relative;
+      color: #ffffff;
+    }
+
+    .khata-card-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: 100%;
+      gap: 8px;
+    }
+    
+    .khata-header-info { 
+      display: flex; 
+      align-items: center; 
+      gap: 10px; 
+      flex: 1; 
+      min-width: 0; 
+    }
+    
+    .profile-img-box { 
+      width: 46px; 
+      height: 46px; 
+      flex-shrink: 0; 
+      border-radius: 50%; 
+      overflow: hidden; 
+      border: 2px solid #ffffff; 
+      position: relative;
+      cursor: pointer;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+      background: #334155;
+    }
+    .profile-img-box img { width: 100%; height: 100%; object-fit: cover; }
+    
+    .khata-customer-name { 
+      color: #ffffff; 
+      font-size: 17px; 
+      font-weight: 900; 
+      white-space: nowrap; 
+      overflow: hidden; 
+      text-overflow: ellipsis; 
+      display: block;
+      line-height: 1.2;
+      text-shadow: 0 1px 3px rgba(0,0,0,0.4);
+    }
+    
+    .khata-phone-container {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin-top: 3px;
+    }
+
+    .call-btn-icon {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 24px;
+      height: 24px;
+      background-color: #ffffff;
+      color: #0f172a;
+      border-radius: 50%;
+      text-decoration: none;
+      font-size: 11px;
+      transition: background 0.2s;
+    }
+    .call-btn-icon:hover { background-color: #e2e8f0; }
+
+    .khata-customer-phone-text { 
+      color: #f1f5f9; 
+      font-size: 12px; 
+      font-weight: 700; 
+      user-select: text;
+    }
+
+    .enter-file-btn {
+      background: linear-gradient(135deg, #64748b, #475569);
+      color: #ffffff;
+      border: 1.5px solid #94a3b8;
+      padding: 8px 12px;
+      border-radius: 10px;
+      font-size: 13px;
+      font-weight: 800;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      box-shadow: 0 3px 8px rgba(0,0,0,0.25);
+      flex-shrink: 0;
+      white-space: nowrap;
+      transition: all 0.2s ease;
+    }
+    .enter-file-btn:active { transform: scale(0.95); }
+
+    .balance-badge-box {
+      text-align: right;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      justify-content: center;
+      gap: 2px;
+      padding-left: 4px;
+      flex-shrink: 0;
+    }
+
+    .right-info-line {
+      font-size: 10.5px !important;
+      color: #f8fafc;
+      line-height: 1.25;
+      white-space: nowrap;
+    }
+
+    .right-info-line b {
+      font-weight: 800;
+      font-size: 11.5px !important;
+    }
+
+    .val-powna { color: #fca5a5 !important; font-weight: 900 !important; }
+    .val-dena { color: #fde047 !important; font-weight: 900 !important; }
+    .val-clear { color: #86efac !important; font-weight: 900 !important; }
+
+    .card-action-select {
+      padding: 0 2px;
+      font-size: 9px !important;
+      border-radius: 4px;
+      border: 1px solid #94a3b8;
+      background: rgba(255, 255, 255, 0.9);
+      color: #0f172a;
+      cursor: pointer;
+      outline: none;
+      height: 18px;
+      width: 44px !important;
+      margin-top: 3px;
+      font-weight: bold;
+    }
+
+    .khata-summary {
+      background: rgba(255, 255, 255, 0.98);
+      padding: 14px 12px;
+      border-radius: var(--radius-md);
+      margin-bottom: 12px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-weight: 800;
+      font-size: 13.5px;
+      color: #0f172a;
+      border: 1.5px solid #a7f3d0;
+      box-shadow: var(--card-shadow);
+    }
+    .status-due { color: #dc2626; font-weight: 800; font-size: 15px; }
+    .status-dena { color: #d97706; font-weight: 800; font-size: 15px; }
+
+    .open-entry-btn {
+      width: 100%;
+      padding: 12px 10px;
+      background: linear-gradient(135deg, #059669, #10b981);
+      color: #ffffff;
+      border: none;
+      border-radius: var(--radius-md);
+      font-size: 14px;
+      font-weight: 800;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      margin-bottom: 12px;
+    }
+
+    .entry-modal-content {
+      background: #ffffff;
+      border: 1.5px solid #a7f3d0;
+      border-radius: var(--radius-md);
+      padding: 12px;
+      margin-bottom: 12px;
+      box-shadow: var(--card-shadow);
+    }
+    .form-title-bar {
+      color: #064e3b;
+      font-size: 13px;
+      font-weight: 800;
+      margin-bottom: 10px;
+      padding-bottom: 6px;
+      border-bottom: 1.5px solid #a7f3d0;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .entry-form-grid { display: flex; flex-direction: column; gap: 8px; }
+    .form-field { display: flex; flex-direction: column; gap: 4px; }
+    .form-field label { font-size: 11px; font-weight: 800; color: #064e3b; }
+    .form-field input, .form-field select {
+      padding: 8px 10px;
+      border: 1.5px solid #cbd5e1;
+      border-radius: var(--radius-sm);
+      font-size: 12px;
+      outline: none;
+      background: #ffffff;
+      user-select: text;
+    }
+
+    .date-filter-container {
+      background: #f8fafc;
+      border: 1.5px solid #cbd5e1;
+      border-radius: var(--radius-sm);
+      padding: 8px;
+      margin-bottom: 8px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .date-filter-inputs {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6px;
+    }
+
+    .fish-row-container {
+      background: #f8fafc;
+      border: 1.5px solid #a7f3d0;
+      border-radius: var(--radius-sm);
+      padding: 8px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .fish-row-item {
+      display: grid;
+      grid-template-columns: 1fr 0.8fr 0.8fr 0.9fr;
+      gap: 5px;
+      align-items: center;
+    }
+    .fish-row-item select, .fish-row-item input {
+      width: 100%;
+      padding: 6px;
+      font-size: 11px;
+      border: 1px solid #cbd5e1;
+      border-radius: 6px;
+      background: #fff;
+    }
+
+    .summary-calc-box {
+      background: #f8fafc;
+      border: 1.5px solid #a7f3d0;
+      border-radius: var(--radius-sm);
+      padding: 8px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6px;
+    }
+    .calc-field-group {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      background: #ffffff;
+      padding: 6px;
+      border-radius: 6px;
+      border: 1px solid #e2e8f0;
+    }
+    .calc-field-group label { font-size: 10.5px; font-weight: 800; color: #064e3b; }
+    .calc-field-group input {
+      font-size: 12px;
+      font-weight: 800;
+      color: #0f172a;
+      border: none;
+      outline: none;
+      background: transparent;
+    }
+
+    .save-entry-btn {
+      width: 100%;
+      padding: 10px;
+      background: #059669;
+      color: #fff;
+      border: none;
+      border-radius: var(--radius-sm);
+      font-weight: 800;
+      font-size: 13px;
+      cursor: pointer;
+      margin-top: 6px;
+    }
+
+    .table-responsive { width: 100%; overflow-x: auto; margin-top: 6px; }
+    table { width: 100%; border-collapse: separate; border-spacing: 0 6px; font-size: 11px; background: transparent; }
+    th { background: #0f172a; color: #fff; font-weight: 700; font-size: 10.5px; padding: 8px 4px; text-align: center; }
+    
+    tbody tr {
+      background: rgba(255, 255, 255, 0.98);
+      box-shadow: 0 2px 5px rgba(0,0,0,0.04);
+      border-radius: var(--radius-sm);
+    }
+    tbody tr td:first-child { border-top-left-radius: var(--radius-sm); border-bottom-left-radius: var(--radius-sm); }
+    tbody tr td:last-child { border-top-right-radius: var(--radius-sm); border-bottom-right-radius: var(--radius-sm); }
+
+    td { padding: 6px 3px; text-align: center; border-top: 1px solid #e2e8f0; border-bottom: 1px solid #e2e8f0; vertical-align: middle; }
+    td:first-child { border-left: 1px solid #e2e8f0; }
+    td:last-child { border-right: 1px solid #e2e8f0; }
+
+    .action-select {
+      padding: 3px 4px;
+      font-size: 9.5px;
+      border-radius: 5px;
+      border: 1px solid #0284c7;
+      background: #f0f9ff;
+      color: #0369a1;
+      font-weight: 700;
+      cursor: pointer;
+      outline: none;
+    }
+
+    .view-btn {
+      background: #1e293b;
+      color: #ffffff;
+      border: none;
+      padding: 4px 7px;
+      border-radius: 5px;
+      font-size: 9.5px;
+      font-weight: 700;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 3px;
+      line-height: 1;
+    }
+
+    .small-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15, 23, 42, 0.6); backdrop-filter: blur(4px); justify-content: center; align-items: center; padding: 12px; z-index: 1005; }
+    .small-modal-content { background: #fff; padding: 16px; border-radius: var(--radius-md); width: 100%; max-width: 360px; box-shadow: var(--card-shadow); }
+    
+    .time-badge { font-size: 8.5px; color: #64748b; display: block; font-weight: 600; line-height: 1.1; margin-top: 2px; }
+
+    .detail-calc-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 6px;
+      font-size: 11px;
+    }
+    .detail-calc-table td {
+      padding: 5px 8px;
+      border: 1px solid #cbd5e1;
+      text-align: left;
+    }
+    .detail-calc-table td.val-col {
+      text-align: right;
+      font-weight: 800;
+    }
+
+    .forgot-pass-link {
+      display: inline-block;
+      margin-top: 6px;
+      font-size: 11px;
+      color: #0284c7;
+      text-decoration: underline;
+      cursor: pointer;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+
+<input type="file" id="imageUploader" accept="image/*" style="display:none" onchange="uploadCustomerImage(event)">
+<input type="file" id="ownerAvatarUploader" accept="image/*" style="display:none" onchange="uploadOwnerAvatar(event)">
+<input type="file" id="backupRestoreUploader" accept=".json" style="display:none" onchange="restoreBackupFile(event)">
+
+<div class="container">
+  <div class="app-header">
+    <div class="user-profile-header" onclick="openProfileSettingsModal()" title="প্রোফাইল সেটিংস">
+      <img id="owner-avatar" src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='50' fill='%23064E3B'/><circle cx='50' cy='36' r='18' fill='%23ffffff'/><path d='M20,84 C20,64 35,58 50,58 C65,58 80,64 80,84 Z' fill='%23ffffff'/></svg>" class="user-avatar-top" alt="Profile">
+      <div class="user-info-text">
+        <span id="owner-name-display" style="font-size:12px; font-weight:800; color:#064e3b;">এডমিন প্রোফাইল</span>
+        <span id="owner-email-display" class="user-email-display">admin@gher.com</span>
+      </div>
+    </div>
+
+    <h2>🐟 ঘেরের স্মার্ট খাতা Pro</h2>
+
+    <div class="menu-dropdown-container">
+      <button class="three-dot-btn" onclick="toggleDropdownMenu(event)">
+        <i class="fa-solid fa-ellipsis-vertical">⋮</i>
+      </button>
+      <div class="dropdown-menu" id="topDropdownMenu">
+        <button onclick="openProfileSettingsModal()"><i class="fa-solid fa-user-gear"></i> প্রোফাইল সেটিংস</button>
+        <button onclick="openPasswordChangeModal()"><i class="fa-solid fa-key"></i> পাসওয়ার্ড পরিবর্তন</button>
+        <button onclick="exportAllDataBackup()"><i class="fa-solid fa-download"></i> 📥 ব্যাকআপ সেভ করুন</button>
+        <button onclick="document.getElementById('backupRestoreUploader').click()"><i class="fa-solid fa-upload"></i> 📤 ব্যাকআপ রিস্টোর</button>
+        <button class="danger-btn" onclick="clearOwnerProfile()"><i class="fa-solid fa-trash"></i> প্রোফাইল ডিলিট</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="year-filter-wrapper">
+    <label for="selectedYear"><i class="fa-regular fa-calendar-days"></i> অর্থবছর নির্বাচন করুন:</label>
+    <select id="selectedYear" class="year-select-dropdown" onchange="onYearChange()"></select>
+  </div>
+
+  <div class="dashboard">
+    <div class="card bg-sale" onclick="openSaleModal()">
+      <div class="title"><i class="fa-solid fa-cart-shopping"></i> মোট বিক্রি</div>
+      <div class="amount" id="sum-sale">৳ 0</div>
+      <div class="card-details-sub">
+        <div>জমা দিয়েছে: <span id="sum-received">৳ 0</span></div>
+        <div>বাকি পাওনা: <span id="sum-due">৳ 0</span></div>
+      </div>
+    </div>
+    <div class="card bg-exp" onclick="openExpenseModal('general')">
+      <div class="title"><i class="fa-solid fa-wrench"></i> সাধারণ খরচ</div>
+      <div class="amount" id="sum-exp">৳ 0</div>
+    </div>
+    <div class="card bg-pona" onclick="openExpenseModal('pona')">
+      <div class="title"><i class="fa-solid fa-fish"></i> মোট পোনা খরচ</div>
+      <div class="amount" id="sum-pona">৳ 0</div>
+    </div>
+    <div class="card bg-hari" onclick="openExpenseModal('hari')">
+      <div class="title"><i class="fa-solid fa-scroll"></i> মোট হারি হিসাব</div>
+      <div class="amount" id="sum-hari">৳ 0</div>
+    </div>
+    <div class="card bg-balance">
+      <div class="title"><i class="fa-solid fa-sack-dollar"></i> নীট লাভ / ক্ষতি</div>
+      <div class="amount" id="sum-balance">৳ 0</div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal: Profile Settings -->
+<div class="small-modal" id="profileSettingsModal">
+  <div class="small-modal-content">
+    <h3 style="margin-bottom: 10px; color: #064e3b; font-size: 13px;">👤 প্রোফাইল ও জিমেইল ব্যবস্থাপনা</h3>
+    
+    <div style="text-align: center; margin-bottom: 10px;">
+      <img id="settings-avatar-preview" src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='50' fill='%23064E3B'/><circle cx='50' cy='36' r='18' fill='%23ffffff'/><path d='M20,84 C20,64 35,58 50,58 C65,58 80,64 80,84 Z' fill='%23ffffff'/></svg>" style="width: 60px; height: 60px; border-radius: 50%; object-fit: cover; border:2px solid #064e3b; cursor:pointer;" onclick="document.getElementById('ownerAvatarUploader').click()">
+      <div style="font-size: 10px; color: #0284c7; font-weight: bold; margin-top: 2px;">ছবি পরিবর্তন করতে ট্যাপ করুন</div>
+    </div>
+
+    <div style="margin-bottom:8px;">
+      <label style="font-size:11px; font-weight:700; color:#334155;">নাম</label>
+      <input type="text" id="owner-name-input" placeholder="আপনার নাম" style="width:100%; padding:8px; border:1px solid #cbd5e1; border-radius:6px; margin-top:3px; font-size:11px;">
+    </div>
+    <div style="margin-bottom:12px;">
+      <label style="font-size:11px; font-weight:700; color:#334155;">জিমেইল আইডি (Gmail ID)</label>
+      <input type="email" id="owner-email-input" placeholder="example@gmail.com" style="width:100%; padding:8px; border:1px solid #cbd5e1; border-radius:6px; margin-top:3px; font-size:11px;">
+    </div>
+
+    <button style="width:100%; padding:9px; background:#059669; color:#fff; border:none; border-radius:6px; font-weight:700; cursor:pointer; font-size:12px;" onclick="saveOwnerProfile()">💾 সেভ করুন</button>
+    <button style="width:100%; padding:7px; background:#dc2626; color:#fff; border:none; border-radius:6px; font-weight:700; cursor:pointer; margin-top:6px; font-size:11px;" onclick="clearOwnerProfile()">🗑️ প্রোফাইল মুছে ফেলুন</button>
+    <button style="width:100%; padding:7px; background:#64748b; color:#fff; border:none; border-radius:6px; font-weight:700; cursor:pointer; margin-top:6px; font-size:11px;" onclick="closeSmallModal('profileSettingsModal')">বাতিল</button>
+  </div>
+</div>
+
+<!-- Modal: Change Password -->
+<div class="small-modal" id="passwordChangeModal">
+  <div class="small-modal-content">
+    <h3 style="margin-bottom: 10px; color: #064e3b; font-size: 13px;">🔑 সিকিউরিটি পাসওয়ার্ড পরিবর্তন</h3>
+    
+    <div style="margin-bottom:8px;">
+      <label style="font-size:11px; font-weight:700; color:#334155;">বর্তমান পাসওয়ার্ড</label>
+      <input type="password" id="curr-pass-input" placeholder="পুরাতন পাসওয়ার্ড" style="width:100%; padding:8px; border:1px solid #cbd5e1; border-radius:6px; margin-top:3px; font-size:11px;">
+    </div>
+    <div style="margin-bottom:8px;">
+      <label style="font-size:11px; font-weight:700; color:#334155;">নতুন পাসওয়ার্ড</label>
+      <input type="password" id="new-pass-input" placeholder="নতুন পাসওয়ার্ড দিন" style="width:100%; padding:8px; border:1px solid #cbd5e1; border-radius:6px; margin-top:3px; font-size:11px;">
+    </div>
+    <div style="margin-bottom:12px; text-align: right;">
+      <span class="forgot-pass-link" onclick="openForgotPasswordModal()">পাসওয়ার্ড ভুলে গেছেন?</span>
+    </div>
+
+    <button style="width:100%; padding:9px; background:#0284c7; color:#fff; border:none; border-radius:6px; font-weight:700; cursor:pointer; font-size:12px;" onclick="saveNewPassword()">পাসওয়ার্ড আপডেট করুন</button>
+    <button style="width:100%; padding:7px; background:#64748b; color:#fff; border:none; border-radius:6px; font-weight:700; cursor:pointer; margin-top:6px; font-size:11px;" onclick="closeSmallModal('passwordChangeModal')">বাতিল</button>
+  </div>
+</div>
+
+<!-- Modal: Forgot Password / Recovery -->
+<div class="small-modal" id="forgotPasswordModal">
+  <div class="small-modal-content">
+    <h3 style="margin-bottom: 10px; color: #064e3b; font-size: 13px;">🔄 পাসওয়ার্ড রিসেট করুন</h3>
+    <p style="font-size: 10.5px; color: #64748b; margin-bottom: 8px;">আপনার প্রোফাইলে যুক্ত করা জিমেইল এড্রেস দিয়ে ভেরিফাই করুন:</p>
+    
+    <div style="margin-bottom:8px;">
+      <label style="font-size:11px; font-weight:700; color:#334155;">রেজিস্টার্ড জিমেইল (Gmail ID)</label>
+      <input type="email" id="recover-email-input" placeholder="example@gmail.com" style="width:100%; padding:8px; border:1px solid #cbd5e1; border-radius:6px; margin-top:3px; font-size:11px;">
+    </div>
+    <div style="margin-bottom:12px;">
+      <label style="font-size:11px; font-weight:700; color:#334155;">নতুন পাসওয়ার্ড</label>
+      <input type="password" id="reset-new-pass-input" placeholder="নতুন পাসওয়ার্ড দিন" style="width:100%; padding:8px; border:1px solid #cbd5e1; border-radius:6px; margin-top:3px; font-size:11px;">
+    </div>
+
+    <button style="width:100%; padding:9px; background:#ea580c; color:#fff; border:none; border-radius:6px; font-weight:700; cursor:pointer; font-size:12px;" onclick="resetForgottenPassword()">পাসওয়ার্ড রিসেট করুন</button>
+    <button style="width:100%; padding:7px; background:#64748b; color:#fff; border:none; border-radius:6px; font-weight:700; cursor:pointer; margin-top:6px; font-size:11px;" onclick="closeSmallModal('forgotPasswordModal')">বাতিল</button>
+  </div>
+</div>
+
+<div class="modal" id="saleModal">
+  <div class="modal-header">
+    <button class="back-btn" onclick="closeModal('saleModal')"><i class="fa-solid fa-arrow-left"></i> পিছনে</button>
+    <h3>মাছ বিক্রির খাতা ( <span id="modal-selected-year"></span> )</h3>
+    <button class="home-btn" onclick="closeModal('saleModal')">🏠 হোম</button>
+  </div>
+  <div class="modal-body">
+    <button class="add-customer-top-btn" onclick="openNewKhataModal()"><i class="fa-solid fa-user-plus"></i> ➕ নতুন কাস্টমার খাতা খুলুন</button>
+    
+    <div class="filter-3-grid">
+      <!-- বক্স ১: সার্চ ও ডেট ফিল্টার ড্রপডাউন -->
+      <div class="filter-box" style="position: relative;">
+        <div style="display:flex; align-items:center; gap:4px;">
+          <i class="fa-solid fa-magnifying-glass" style="color:#059669; font-size:11px;">🔍</i>
+          <input type="text" id="popup-search" onkeyup="filterCustomers()" placeholder="নাম/নম্বর...">
+          <i class="fa-solid fa-calendar-days" onclick="toggleDatePanel(event)" style="cursor:pointer; color:#0284c7; font-size:12px;" title="তারিখ ফিল্টার">📅</i>
+        </div>
+
+        <div class="date-dropdown-panel" id="datePanel" onclick="event.stopPropagation()">
+          <div style="font-size:11px; font-weight:bold; color:#064e3b; margin-bottom:6px;">📅 তারিখ অনুযায়ী ফিল্টার</div>
+          <div style="display:flex; flex-direction:column; gap:4px; margin-bottom:8px;">
+            <label style="font-size:10px;">হতে:</label>
+            <input type="date" id="filter-start-date" style="border:1px solid #cbd5e1; padding:4px; border-radius:4px;">
+            <label style="font-size:10px;">পর্যন্ত:</label>
+            <input type="date" id="filter-end-date" style="border:1px solid #cbd5e1; padding:4px; border-radius:4px;">
+          </div>
+          <div style="display:flex; gap:4px;">
+            <button onclick="applyDateFilter()" style="flex:1; background:#059669; color:#fff; border:none; padding:5px; border-radius:4px; font-size:10px; font-weight:bold; cursor:pointer;">প্রয়োগ</button>
+            <button onclick="resetDateFilter()" style="flex:1; background:#64748b; color:#fff; border:none; padding:5px; border-radius:4px; font-size:10px; font-weight:bold; cursor:pointer;">রিসেট</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- বক্স ২: ফিল্টার ড্রপডাউন -->
+      <div class="filter-box">
+        <select id="listSorter" onchange="filterCustomers()">
+          <option value="recent">⚡ রিসেন্ট আপডেট</option>
+          <option value="due">🔴 বাকি পাওনা</option>
+          <option value="advance">🟡 দেনা (অগ্রিম)</option>
+          <option value="sales">🟢 বেশি বিক্রি</option>
+          <option value="clear">✅ ক্লিয়ার হিসাব</option>
+        </select>
+      </div>
+
+      <!-- বক্স ৩: কাস্টমার ওভারভিউ মোট হিসাব -->
+      <div class="summary-overview-box">
+        <div><span>বিক্রি:</span> <b id="total-cust-sale">৳0</b></div>
+        <div><span>জমা:</span> <b id="total-cust-received">৳0</b></div>
+        <div><span id="total-cust-status-lbl">বাকি:</span> <b id="total-cust-due" style="color:#fca5a5;">৳0</b></div>
+      </div>
+    </div>
+
+    <div id="customerContainer"></div>
+  </div>
+</div>
+
+<div class="modal" id="expenseModal">
+  <div class="modal-header">
+    <button class="back-btn" onclick="closeModal('expenseModal')"><i class="fa-solid fa-arrow-left"></i> পিছনে</button>
+    <h3 id="expense-modal-title">খরচের হিসাব</h3>
+    <button class="home-btn" onclick="closeModal('expenseModal')">🏠 হোম</button>
+  </div>
+  <div class="modal-body">
+    <div class="khata-summary">
+      <div>মোট খরচ: <span id="expense-summary-total" style="color:#dc2626;">৳0</span></div>
+    </div>
+
+    <!-- খরচের খাতার ভেতরের ডেট রেঞ্জ ও ক্যাটাগরি ফিল্টার ড্রপডাউন -->
+    <div class="date-filter-container">
+      <div style="font-size:11px; font-weight:bold; color:#064e3b; display:flex; justify-content:space-between; align-items:center;">
+        <span>📅 খরচের ফিল্টার</span>
+        <select id="exp-category-filter" onchange="renderExpenses()" style="padding:2px 6px; font-size:10px; font-weight:bold; border-radius:4px; border:1px solid #059669;">
+          <option value="all">সব খাত</option>
+        </select>
+      </div>
+      <div class="date-filter-inputs">
+        <div>
+          <label style="font-size:10px; font-weight:bold; color:#334155;">হতে:</label>
+          <input type="date" id="exp-start-date" onchange="renderExpenses()" style="width:100%; border:1px solid #cbd5e1; padding:4px; border-radius:4px; font-size:10.5px;">
+        </div>
+        <div>
+          <label style="font-size:10px; font-weight:bold; color:#334155;">পর্যন্ত:</label>
+          <input type="date" id="exp-end-date" onchange="renderExpenses()" style="width:100%; border:1px solid #cbd5e1; padding:4px; border-radius:4px; font-size:10.5px;">
+        </div>
+      </div>
+      <button onclick="resetExpenseFilter()" style="background:#64748b; color:#fff; border:none; padding:4px; border-radius:4px; font-size:10px; font-weight:bold; cursor:pointer;">ফিল্টার রিসেট</button>
+    </div>
+
+    <button class="open-entry-btn" onclick="toggleExpenseForm()">
+      <i class="fa-solid fa-plus-circle"></i> ➕ নতুন খরচের এন্ট্রি ফরম
+    </button>
+
+    <div id="expenseFormPopup" class="entry-modal-content" style="display:none;">
+      <div class="form-title-bar">
+        <i class="fa-solid fa-pen-to-square"></i> নতুন খরচের তথ্য দিন
+      </div>
+      
+      <div class="entry-form-grid">
+        <div class="form-field">
+          <label>তারিখ</label>
+          <input type="date" id="exp-date">
+        </div>
+
+        <div class="form-field">
+          <label>খাত / বিবরণ</label>
+          <input type="text" id="exp-desc" placeholder="যেমন: খাদ্য ক্রয়, মেরামত, ইত্যাদি">
+        </div>
+
+        <div class="form-field">
+          <label>টাকার পরিমাণ (৳)</label>
+          <input type="number" id="exp-amount" placeholder="0">
+        </div>
+      </div>
+
+      <button class="save-entry-btn" onclick="saveExpenseEntry()">💾 খরচ সেভ করুন</button>
+    </div>
+
+    <div class="table-responsive">
+      <table>
+        <thead>
+          <tr>
+            <th style="width: 30%;">তারিখ</th>
+            <th style="width: 45%;">বিবরণ</th>
+            <th style="width: 25%;">পরিমাণ (৳)</th>
+          </tr>
+        </thead>
+        <tbody id="expenseTableBody"></tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<div class="modal" id="customerKhataView">
+  <div class="modal-header">
+    <button class="back-btn" onclick="closeModal('customerKhataView')"><i class="fa-solid fa-arrow-left"></i> পিছনে</button>
+    <h3 id="khata-title">কাস্টমার খাতা</h3>
+    <button class="home-btn" onclick="goToHome()">🏠 হোম</button>
+  </div>
+  <div class="modal-body">
+    
+    <div class="khata-summary">
+      <div>মোট বিক্রি: <span id="summary-total" style="color:#0f172a;">৳0</span></div>
+      <div>নগদ জমা: <span id="summary-received" style="color:#0284c7;">৳0</span></div>
+      <div id="summary-status-box">বাকি পাওনা: <span class="status-due">৳0</span></div>
+    </div>
+
+    <!-- নির্দিষ্ট কাস্টমারের খাতার ভেতরের ডেট রেঞ্জ ফিল্টার সেকশন -->
+    <div class="date-filter-container">
+      <div style="font-size:11px; font-weight:bold; color:#064e3b;">📅 এন্ট্রি তারিখ ফিল্টার</div>
+      <div class="date-filter-inputs">
+        <div>
+          <label style="font-size:10px; font-weight:bold; color:#334155;">হতে:</label>
+          <input type="date" id="cust-entry-start-date" onchange="renderSheetTable()" style="width:100%; border:1px solid #cbd5e1; padding:4px; border-radius:4px; font-size:10.5px;">
+        </div>
+        <div>
+          <label style="font-size:10px; font-weight:bold; color:#334155;">পর্যন্ত:</label>
+          <input type="date" id="cust-entry-end-date" onchange="renderSheetTable()" style="width:100%; border:1px solid #cbd5e1; padding:4px; border-radius:4px; font-size:10.5px;">
+        </div>
+      </div>
+      <button onclick="resetCustEntryFilter()" style="background:#64748b; color:#fff; border:none; padding:4px; border-radius:4px; font-size:10px; font-weight:bold; cursor:pointer;">ফিল্টার রিসেট</button>
+    </div>
+
+    <button class="open-entry-btn" onclick="toggleEntryModal()">
+      <i class="fa-solid fa-plus-circle"></i> ➕ নতুন হিসাব এন্ট্রি ফরম পপ-আপ করুন
+    </button>
+
+    <div id="entryFormPopup" class="entry-modal-content" style="display:none;">
+      <div class="form-title-bar">
+        <i class="fa-solid fa-pen-to-square"></i> নতুন হিসাব এন্ট্রি ফরম
+      </div>
+      
+      <div class="entry-form-grid">
+        <div class="form-field">
+          <label>তারিখ</label>
+          <input type="date" id="entry-date">
+        </div>
+
+        <div class="fish-row-container">
+          <div class="fish-row-item">
+            <select id="entry-fish1">
+              <option value="">মাছ ১</option>
+              <option value="বাগদা">বাগদা</option>
+              <option value="হরিণা">হরিণা</option>
+              <option value="গলদা">গলদা</option>
+              <option value="পারশে">পারশে</option>
+              <option value="ভেটকি">ভেটকি</option>
+              <option value="টেংরা">টেংরা</option>
+              <option value="সাদা মাছ">সাদা মাছ</option>
+              <option value="রুই/কাতলা">রুই/কাতলা</option>
+              <option value="অন্যান্য">অন্যান্য</option>
+            </select>
+            <input type="number" id="entry-weight1" placeholder="ওজন (কেজি)" oninput="calcRowPrice(1)">
+            <input type="number" id="entry-rate1" placeholder="দর (৳)" oninput="calcRowPrice(1)">
+            <input type="number" id="entry-price1" placeholder="দাম (৳)" oninput="calculateTotalSum()">
+          </div>
+
+          <div class="fish-row-item">
+            <select id="entry-fish2">
+              <option value="">মাছ ২</option>
+              <option value="বাগদা">বাগদা</option>
+              <option value="হরিণা">হরিণা</option>
+              <option value="গলদা">গলদা</option>
+              <option value="পারশে">পারশে</option>
+              <option value="ভেটকি">ভেটকি</option>
+              <option value="টেংরা">টেংরা</option>
+              <option value="সাদা মাছ">সাদা মাছ</option>
+              <option value="রুই/কাতলা">রুই/কাতলা</option>
+              <option value="অন্যান্য">অন্যান্য</option>
+            </select>
+            <input type="number" id="entry-weight2" placeholder="ওজন (কেজি)" oninput="calcRowPrice(2)">
+            <input type="number" id="entry-rate2" placeholder="দর (৳)" oninput="calcRowPrice(2)">
+            <input type="number" id="entry-price2" placeholder="দাম (৳)" oninput="calculateTotalSum()">
+          </div>
+
+          <div class="fish-row-item">
+            <select id="entry-fish3">
+              <option value="">মাছ ৩</option>
+              <option value="বাগদা">বাগদা</option>
+              <option value="হরিণা">হরিণা</option>
+              <option value="গলদা">গলদা</option>
+              <option value="পারশে">পারশে</option>
+              <option value="ভেটকি">ভেটকি</option>
+              <option value="টেংরা">টেংরা</option>
+              <option value="সাদা মাছ">সাদা মাছ</option>
+              <option value="রুই/কাতলা">রুই/কাতলা</option>
+              <option value="অন্যান্য">অন্যান্য</option>
+            </select>
+            <input type="number" id="entry-weight3" placeholder="ওজন (কেজি)" oninput="calcRowPrice(3)">
+            <input type="number" id="entry-rate3" placeholder="দর (৳)" oninput="calcRowPrice(3)">
+            <input type="number" id="entry-price3" placeholder="দাম (৳)" oninput="calculateTotalSum()">
+          </div>
+        </div>
+
+        <div class="form-field">
+          <label>বিস্তারিত নোট / বিবরণ</label>
+          <input type="text" id="entry-desc" placeholder="যেমন: বিবরণ বা নোট...">
+        </div>
+
+        <div class="summary-calc-box">
+          <div class="calc-field-group">
+            <label>কমিশন (৳)</label>
+            <input type="number" id="entry-commission" placeholder="0" oninput="calculateTotalSum()">
+          </div>
+          <div class="calc-field-group">
+            <label>নিট বিল (৳)</label>
+            <input type="number" id="entry-total" placeholder="৳ 0">
+          </div>
+          <div class="calc-field-group" style="grid-column: span 2;">
+            <label>জমা টাকা (৳)</label>
+            <input type="number" id="entry-received" placeholder="কত টাকা জমা দিল" style="font-size:12px; color:#0284c7;">
+          </div>
+        </div>
+      </div>
+
+      <button class="save-entry-btn" id="entry-submit-btn" onclick="saveDirectEntry()">💾 হিসাব সেভ করুন</button>
+    </div>
+
+    <div class="table-responsive">
+      <table>
+        <thead>
+          <tr>
+            <th style="width: 26%;">তারিখ ও সময়</th>
+            <th style="width: 18%;">মোট বিক্রি</th>
+            <th style="width: 15%;">জমা</th>
+            <th style="width: 18%;">বাকি / দেনা</th>
+            <th style="width: 11%;">ভিউ</th>
+            <th style="width: 12%;">অ্যাকশন</th>
+          </tr>
+        </thead>
+        <tbody id="sheetTableBody"></tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<div class="small-modal" id="newKhataModal">
+  <div class="small-modal-content">
+    <h3 style="margin-bottom: 10px; color: #064e3b; font-size: 13px;">নতুন কাস্টমার খাতা খুলুন</h3>
+    <div style="margin-bottom:8px;">
+      <label style="font-size:11px; font-weight:700; color:#334155;">কাস্টমারের নাম</label>
+      <input type="text" id="cust-name" placeholder="যেমন: খাইরুল ভাই" style="width:100%; padding:8px; border:1px solid #cbd5e1; border-radius:6px; margin-top:3px; font-size:11px;">
+    </div>
+    <div style="margin-bottom:12px;">
+      <label style="font-size:11px; font-weight:700; color:#334155;">মোবাইল নম্বর</label>
+      <input type="text" id="cust-phone" placeholder="যেমন: 01928841541" style="width:100%; padding:8px; border:1px solid #cbd5e1; border-radius:6px; margin-top:3px; font-size:11px;">
+    </div>
+    <button style="width:100%; padding:9px; background:#059669; color:#fff; border:none; border-radius:6px; font-weight:700; cursor:pointer; font-size:12px;" onclick="saveNewKhata()">খাতা তৈরি করুন</button>
+    <button style="width:100%; padding:7px; background:#64748b; color:#fff; border:none; border-radius:6px; font-weight:700; cursor:pointer; margin-top:6px; font-size:11px;" onclick="closeSmallModal('newKhataModal')">বাতিল</button>
+  </div>
+</div>
+
+<div class="small-modal" id="viewDetailModal">
+  <div class="small-modal-content">
+    <h3 style="margin-bottom: 8px; color: #064e3b; font-size: 13px; text-align:center;">📋 এন্ট্রি বিবরণী</h3>
+    <div id="viewDetailBody" style="font-size:11px; color:#334155; margin-bottom:12px; border:1px solid #e2e8f0; padding:8px; border-radius:6px; background:#f8fafc; line-height:1.6;"></div>
+    <button style="width:100%; padding:9px; background:#0284c7; color:#fff; border:none; border-radius:6px; font-weight:700; cursor:pointer; font-size:11px; margin-bottom:6px;" onclick="downloadVoucher()">📥 প্রফেশনাল মেমো প্রিন্ট / ডাউনলোড</button>
+    <button style="width:100%; padding:7px; background:#64748b; color:#fff; border:none; border-radius:6px; font-weight:700; cursor:pointer; font-size:10.5px;" onclick="closeSmallModal('viewDetailModal')">বন্ধ করুন</button>
+  </div>
+</div>
+
+<script>
+  let customers = [];
+  let expenses = { general: [], pona: [], hari: [] };
+  let currentExpenseType = 'general';
+  let currentCustIndex = -1;
+  let editingEntryIndex = -1;
+  let activeViewEntry = null;
+  let selectedCustomerForImg = -1;
+
+  const DEFAULT_AVATAR = "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='50' fill='%2364748B'/><circle cx='50' cy='36' r='18' fill='%23ffffff'/><path d='M20,84 C20,64 35,58 50,58 C65,58 80,64 80,84 Z' fill='%23ffffff'/></svg>";
+  const DEFAULT_OWNER_AVATAR = "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='50' fill='%23064E3B'/><circle cx='50' cy='36' r='18' fill='%23ffffff'/><path d='M20,84 C20,64 35,58 50,58 C65,58 80,64 80,84 Z' fill='%23ffffff'/></svg>";
+  
+  async function hashPassword(str) {
+    const encoder = new TextEncoder();
+    const data = encoder.encode(str);
+    const hash = await crypto.subtle.digest('SHA-256', data);
+    return Array.from(new Uint8Array(hash)).map(b => b.toString(16).padStart(2, '0')).join('');
+  }
+
+  let adminPasswordHash = localStorage.getItem('gher_admin_pass_hash') || "1a08c8c4f9408e00e84323e2d6b38c353b3b48f95c470bf06bb3d5964d4b1a41";
+
+  const CARD_COLORS = [
+    "linear-gradient(135deg, #0f172a, #1e293b)",
+    "linear-gradient(135deg, #064e3b, #047857)",
+    "linear-gradient(135deg, #1e1b4b, #312e81)",
+    "linear-gradient(135deg, #701a75, #86198f)",
+    "linear-gradient(135deg, #7c2d12, #9a3412)",
+    "linear-gradient(135deg, #134e4a, #0f766e)",
+    "linear-gradient(135deg, #831843, #9d174d)"
+  ];
+
+  function toggleDropdownMenu(e) {
+    if(e) e.stopPropagation();
+    const menu = document.getElementById('topDropdownMenu');
+    menu.style.display = (menu.style.display === 'block') ? 'none' : 'block';
+  }
+
+  document.addEventListener('click', function() {
+    const menu = document.getElementById('topDropdownMenu');
+    if (menu) menu.style.display = 'none';
+    const datePanel = document.getElementById('datePanel');
+    if (datePanel) datePanel.style.display = 'none';
+  });
+
+  function toggleDatePanel(e) {
+    if(e) e.stopPropagation();
+    const panel = document.getElementById('datePanel');
+    panel.style.display = (panel.style.display === 'block') ? 'none' : 'block';
+  }
+
+  function loadOwnerProfile() {
+    let ownerData = { name: "এডমিন প্রোফাইল", email: "admin@gher.com", avatar: DEFAULT_OWNER_AVATAR };
+    try {
+      const stored = localStorage.getItem('gher_owner_profile');
+      if (stored) ownerData = JSON.parse(stored);
+    } catch(e) { console.error(e); }
+
+    document.getElementById('owner-name-display').innerText = ownerData.name || "এডমিন প্রোফাইল";
+    document.getElementById('owner-email-display').innerText = ownerData.email || "admin@gher.com";
+    document.getElementById('owner-avatar').src = ownerData.avatar || DEFAULT_OWNER_AVATAR;
+
+    document.getElementById('owner-name-input').value = ownerData.name || "এডমিন প্রোফাইল";
+    document.getElementById('owner-email-input').value = ownerData.email || "admin@gher.com";
+    document.getElementById('settings-avatar-preview').src = ownerData.avatar || DEFAULT_OWNER_AVATAR;
+  }
+
+  function openProfileSettingsModal() {
+    loadOwnerProfile();
+    document.getElementById('profileSettingsModal').style.display = 'flex';
+  }
+
+  // Automatic Canvas Resizing to prevent localStorage limits on Android phones!
+  function compressImage(file, maxDimension, quality, callback) {
+    const reader = new FileReader();
+    reader.onload = function(evt) {
+      const img = new Image();
+      img.onload = function() {
+        const canvas = document.createElement('canvas');
+        let width = img.width;
+        let height = img.height;
+
+        if (width > height) {
+          if (width > maxDimension) {
+            height = Math.round((height * maxDimension) / width);
+            width = maxDimension;
+          }
+        } else {
+          if (height > maxDimension) {
+            width = Math.round((width * maxDimension) / height);
+            height = maxDimension;
+          }
+        }
+
+        canvas.width = width;
+        canvas.height = height;
+        const ctx = canvas.getContext('2d');
+        ctx.drawImage(img, 0, 0, width, height);
+        const compressedBase64 = canvas.toDataURL('image/jpeg', quality);
+        callback(compressedBase64);
+      };
+      img.src = evt.target.result;
+    };
+    reader.readAsDataURL(file);
+  }
+
+  function uploadOwnerAvatar(e) {
+    const file = e.target.files[0];
+    if (file) {
+      compressImage(file, 250, 0.7, function(base64Img) {
+        document.getElementById('settings-avatar-preview').src = base64Img;
+        document.getElementById('owner-avatar').src = base64Img;
+
+        let ownerData = { name: "এডমিন প্রোফাইল", email: "admin@gher.com" };
+        try {
+          const stored = localStorage.getItem('gher_owner_profile');
+          if (stored) ownerData = JSON.parse(stored);
+        } catch(err){}
+        
+        ownerData.avatar = base64Img;
+        localStorage.setItem('gher_owner_profile', JSON.stringify(ownerData));
+      });
+    }
+  }
+
+  function saveOwnerProfile() {
+    const name = document.getElementById('owner-name-input').value.trim() || "এডমিন প্রোফাইল";
+    const email = document.getElementById('owner-email-input').value.trim() || "admin@gher.com";
+    const avatar = document.getElementById('settings-avatar-preview').src;
+
+    const ownerData = { name, email, avatar };
+    localStorage.setItem('gher_owner_profile', JSON.stringify(ownerData));
+    loadOwnerProfile();
+    closeSmallModal('profileSettingsModal');
+    alert("প্রোফাইল সেটিংস আপডেট করা হয়েছে!");
+  }
+
+  async function clearOwnerProfile() {
+    const pass = prompt("প্রোফাইল রিসেট করতে অ্যাডমিন পাসওয়ার্ড দিন:");
+    if (pass !== null) {
+      const inputHash = await hashPassword(pass);
+      if (inputHash === adminPasswordHash) {
+        if (confirm("আপনি কি নিশ্চিত যে প্রোফাইলের তথ্যগুলো রিসেট করতে চান?")) {
+          localStorage.removeItem('gher_owner_profile');
+          loadOwnerProfile();
+          closeSmallModal('profileSettingsModal');
+          alert("প্রোফাইল রিমুভ করা হয়েছে!");
+        }
+      } else {
+        alert("ভুল পাসওয়ার্ড!");
+      }
+    }
+  }
+
+  function openPasswordChangeModal() {
+    document.getElementById('curr-pass-input').value = '';
+    document.getElementById('new-pass-input').value = '';
+    document.getElementById('passwordChangeModal').style.display = 'flex';
+  }
+
+  function openForgotPasswordModal() {
+    closeSmallModal('passwordChangeModal');
+    document.getElementById('recover-email-input').value = '';
+    document.getElementById('reset-new-pass-input').value = '';
+    document.getElementById('forgotPasswordModal').style.display = 'flex';
+  }
+
+  async function resetForgottenPassword() {
+    const enteredEmail = document.getElementById('recover-email-input').value.trim();
+    const newPass = document.getElementById('reset-new-pass-input').value.trim();
+
+    let ownerData = { email: "admin@gher.com" };
+    try {
+      const stored = localStorage.getItem('gher_owner_profile');
+      if (stored) ownerData = JSON.parse(stored);
+    } catch(e){}
+
+    const currentEmail = ownerData.email || "admin@gher.com";
+
+    if (!enteredEmail || enteredEmail.toLowerCase() !== currentEmail.toLowerCase()) {
+      alert("রেজিস্টার্ড জিমেইল আইডি সঠিক নয়!");
+      return;
+    }
+
+    if (!newPass) {
+      alert("নতুন পাসওয়ার্ড প্রদান করুন!");
+      return;
+    }
+
+    adminPasswordHash = await hashPassword(newPass);
+    localStorage.setItem('gher_admin_pass_hash', adminPasswordHash);
+    closeSmallModal('forgotPasswordModal');
+    alert("পাসওয়ার্ড সফলভাবে রিসেট করা হয়েছে!");
+  }
+
+  async function saveNewPassword() {
+    const currPass = document.getElementById('curr-pass-input').value;
+    const newPass = document.getElementById('new-pass-input').value.trim();
+
+    const currHash = await hashPassword(currPass);
+    if (currHash !== adminPasswordHash) {
+      alert("বর্তমান পাসওয়ার্ড সঠিক নয়!");
+      return;
+    }
+    if (!newPass) {
+      alert("নতুন পাসওয়ার্ড দিন!");
+      return;
+    }
+
+    adminPasswordHash = await hashPassword(newPass);
+    localStorage.setItem('gher_admin_pass_hash', adminPasswordHash);
+    closeSmallModal('passwordChangeModal');
+    alert("পাসওয়ার্ড সফলভাবে পরিবর্তন করা হয়েছে!");
+  }
+
+  // Backup & Restore Utilities
+  function exportAllDataBackup() {
+    const backupObj = {};
+    for (let i = 0; i < localStorage.length; i++) {
+      const key = localStorage.key(i);
+      if (key.startsWith('gher_')) {
+        backupObj[key] = localStorage.getItem(key);
+      }
+    }
+    const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(backupObj));
+    const dlAnchor = document.createElement('a');
+    dlAnchor.setAttribute("href", dataStr);
+    dlAnchor.setAttribute("download", "Gher_Smart_Khata_Backup_" + new Date().toISOString().slice(0,10) + ".json");
+    document.body.appendChild(dlAnchor);
+    dlAnchor.click();
+    dlAnchor.remove();
+  }
+
+  function restoreBackupFile(e) {
+    const file = e.target.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = function(evt) {
+      try {
+        const parsed = JSON.parse(evt.target.result);
+        if (confirm("আপনি কি নিশ্চিত এই ব্যাকআপ ফাইলটি রিস্টোর করতে চান? বর্তমান ডাটা ওভাররাইট হবে!")) {
+          for (const k in parsed) {
+            localStorage.setItem(k, parsed[k]);
+          }
+          alert("ডাটা সফলভাবে রিস্টোর হয়েছে!");
+          location.reload();
+        }
+      } catch(err) {
+        alert("ভুল ফাইল ফরম্যাট! সঠিক ব্যাকআপ ফাইল নির্বাচন করুন।");
+      }
+    };
+    reader.readAsText(file);
+  }
+
+  function populateYearDropdown() {
+    const yearSelect = document.getElementById('selectedYear');
+    yearSelect.innerHTML = '';
+    const startYear = 2025;
+    const currentYear = new Date().getFullYear();
+    for (let y = startYear; y <= 2030; y++) {
+      const opt = document.createElement('option');
+      opt.value = y;
+      opt.innerText = y + " সাল";
+      if (y === currentYear) opt.selected = true;
+      yearSelect.appendChild(opt);
+    }
+  }
+
+  function getSelectedYear() { return parseInt(document.getElementById('selectedYear').value) || new Date().getFullYear(); }
+
+  function loadYearData() {
+    const year = getSelectedYear();
+    try {
+      let yearCustData = localStorage.getItem('gher_customers_year_' + year);
+      if (!yearCustData && year === new Date().getFullYear()) {
+        yearCustData = localStorage.getItem('gher_customers');
+      }
+      customers = JSON.parse(yearCustData) || [];
+
+      let yearExpData = localStorage.getItem('gher_expenses_year_' + year);
+      if (!yearExpData && year === new Date().getFullYear()) {
+        yearExpData = localStorage.getItem('gher_expenses');
+      }
+      expenses = JSON.parse(yearExpData) || { general: [], pona: [], hari: [] };
+    } catch(e) {
+      customers = [];
+      expenses = { general: [], pona: [], hari: [] };
+    }
+  }
+
+  function saveYearData() {
+    const year = getSelectedYear();
+    localStorage.setItem('gher_customers_year_' + year, JSON.stringify(customers));
+    localStorage.setItem('gher_expenses_year_' + year, JSON.stringify(expenses));
+    
+    localStorage.setItem('gher_customers', JSON.stringify(customers));
+    localStorage.setItem('gher_expenses', JSON.stringify(expenses));
+  }
+
+  function onYearChange() {
+    loadYearData();
+    updateDashboard();
+    if (document.getElementById('saleModal').style.display === 'flex') {
+      renderCustomers();
+      document.getElementById('modal-selected-year').innerText = getSelectedYear() + " সাল";
+    }
+  }
+
+  function openSaleModal() {
+    loadYearData();
+    document.getElementById('saleModal').style.display = 'flex';
+    document.getElementById('modal-selected-year').innerText = getSelectedYear() + " সাল";
+    renderCustomers();
+    updateDashboard();
+  }
+
+  function openExpenseModal(type) {
+    currentExpenseType = type;
+    loadYearData();
+    const titles = { general: "সাধারণ খরচের হিসাব", pona: "পোনা খরচের হিসাব", hari: "হারি খরচের হিসাব" };
+    document.getElementById('expense-modal-title').innerText = titles[type];
+    document.getElementById('expenseModal').style.display = 'flex';
+    document.getElementById('exp-date').valueAsDate = new Date();
+    
+    resetExpenseFilterInputs();
+    populateExpenseCategoryDropdown();
+    renderExpenses();
+  }
+
+  function populateExpenseCategoryDropdown() {
+    const select = document.getElementById('exp-category-filter');
+    select.innerHTML = '<option value="all">সব খাত</option>';
+    const list = expenses[currentExpenseType] || [];
+    const categories = new Set();
+    
+    list.forEach(item => {
+      if (item.desc) categories.add(item.desc.trim());
+    });
+
+    categories.forEach(cat => {
+      const opt = document.createElement('option');
+      opt.value = cat;
+      opt.innerText = cat;
+      select.appendChild(opt);
+    });
+  }
+
+  function resetExpenseFilterInputs() {
+    document.getElementById('exp-start-date').value = '';
+    document.getElementById('exp-end-date').value = '';
+    document.getElementById('exp-category-filter').value = 'all';
+  }
+
+  function resetExpenseFilter() {
+    resetExpenseFilterInputs();
+    renderExpenses();
+  }
+
+  function toggleExpenseForm() {
+    const popup = document.getElementById('expenseFormPopup');
+    popup.style.display = (popup.style.display === 'none' || popup.style.display === '') ? 'block' : 'none';
+  }
+
+  function saveExpenseEntry() {
+    const date = document.getElementById('exp-date').value;
+    const desc = document.getElementById('exp-desc').value.trim();
+    const amount = parseFloat(document.getElementById('exp-amount').value) || 0;
+
+    if (!date || amount <= 0) {
+      alert('দয়া করে সঠিক তারিখ ও খরচের পরিমাণ দিন!');
+      return;
+    }
+
+    if (!expenses[currentExpenseType]) expenses[currentExpenseType] = [];
+    expenses[currentExpenseType].unshift({ date, desc: desc || 'খরচ', amount });
+    
+    saveYearData();
+    document.getElementById('exp-desc').value = '';
+    document.getElementById('exp-amount').value = '';
+    
+    document.getElementById('expenseFormPopup').style.display = 'none';
+    
+    populateExpenseCategoryDropdown();
+    renderExpenses();
+    updateDashboard();
+  }
+
+  function renderExpenses() {
+    const tbody = document.getElementById('expenseTableBody');
+    tbody.innerHTML = '';
+    let total = 0;
+    const list = expenses[currentExpenseType] || [];
+
+    const startDate = document.getElementById('exp-start-date').value;
+    const endDate = document.getElementById('exp-end-date').value;
+    const catFilter = document.getElementById('exp-category-filter').value;
+
+    const filteredList = list.filter(item => {
+      if (startDate && item.date < startDate) return false;
+      if (endDate && item.date > endDate) return false;
+      if (catFilter !== 'all' && item.desc !== catFilter) return false;
+      return true;
+    });
+
+    if (filteredList.length === 0) {
+      tbody.innerHTML = '<tr><td colspan="3" style="color:#888; padding:10px; background:#fff;">কোনো খরচের তথ্য পাওয়া যায়নি</td></tr>';
+    } else {
+      filteredList.forEach(item => {
+        total += item.amount;
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td><b>${item.date}</b></td>
+          <td>${item.desc}</td>
+          <td style="color:#dc2626; font-weight:700;">৳${item.amount}</td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+    document.getElementById('expense-summary-total').innerText = '৳' + total;
+  }
+
+  function closeModal(modalId) { document.getElementById(modalId).style.display = 'none'; }
+  function closeSmallModal(modalId) { document.getElementById(modalId).style.display = 'none'; }
+  
+  function goToHome() { 
+    closeModal('customerKhataView'); 
+    closeModal('saleModal'); 
+    closeModal('expenseModal');
+    updateDashboard(); 
+  }
+
+  function toggleEntryModal() {
+    const popup = document.getElementById('entryFormPopup');
+    const isOpening = (popup.style.display === 'none' || popup.style.display === '');
+    if (isOpening && editingEntryIndex === -1) {
+      resetForm();
+    }
+    popup.style.display = isOpening ? 'block' : 'none';
+  }
+
+  function calcRowPrice(rowNum) {
+    const weight = parseFloat(document.getElementById('entry-weight' + rowNum).value) || 0;
+    const rate = parseFloat(document.getElementById('entry-rate' + rowNum).value) || 0;
+    if (weight > 0 && rate > 0) {
+      document.getElementById('entry-price' + rowNum).value = weight * rate;
+    }
+    calculateTotalSum();
+  }
+
+  function calculateTotalSum() {
+    const p1 = parseFloat(document.getElementById('entry-price1').value) || 0;
+    const p2 = parseFloat(document.getElementById('entry-price2').value) || 0;
+    const p3 = parseFloat(document.getElementById('entry-price3').value) || 0;
+    const commission = parseFloat(document.getElementById('entry-commission').value) || 0;
+
+    const grandTotal = (p1 + p2 + p3) - commission;
+    if (grandTotal > 0) {
+      document.getElementById('entry-total').value = grandTotal;
+    } else {
+      document.getElementById('entry-total').value = '';
+    }
+  }
+
+  function getCurrentRealTime() {
+    const now = new Date();
+    return now.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true });
+  }
+
+  function triggerImageUpload(index, event) {
+    event.stopPropagation();
+    selectedCustomerForImg = index;
+    document.getElementById('imageUploader').click();
+  }
+
+  function uploadCustomerImage(e) {
+    const file = e.target.files[0];
+    if (file && selectedCustomerForImg > -1) {
+      compressImage(file, 250, 0.7, function(base64Img) {
+        customers[selectedCustomerForImg].image = base64Img;
+        saveYearData();
+        renderCustomers();
+      });
+    }
+  }
+
+  function saveDirectEntry() {
+    if (currentCustIndex < 0) {
+      alert("কোনো কাস্টমার নির্বাচন করা নেই!");
+      return;
+    }
+
+    const date = document.getElementById('entry-date').value;
+    const desc = document.getElementById('entry-desc').value.trim();
+
+    const fish1 = document.getElementById('entry-fish1').value;
+    const weight1 = document.getElementById('entry-weight1').value;
+    const rate1 = document.getElementById('entry-rate1').value;
+    const price1 = parseFloat(document.getElementById('entry-price1').value) || 0;
+    
+    const fish2 = document.getElementById('entry-fish2').value;
+    const weight2 = document.getElementById('entry-weight2').value;
+    const rate2 = document.getElementById('entry-rate2').value;
+    const price2 = parseFloat(document.getElementById('entry-price2').value) || 0;
+
+    const fish3 = document.getElementById('entry-fish3').value;
+    const weight3 = document.getElementById('entry-weight3').value;
+    const rate3 = document.getElementById('entry-rate3').value;
+    const price3 = parseFloat(document.getElementById('entry-price3').value) || 0;
+
+    const commission = parseFloat(document.getElementById('entry-commission').value) || 0;
+    const received = parseFloat(document.getElementById('entry-received').value) || 0;
+
+    const rawTotal = price1 + price2 + price3;
+    const totalPrice = parseFloat(document.getElementById('entry-total').value) || (rawTotal - commission);
+
+    if (!date) { alert('দয়া করে তারিখ নিশ্চিত করুন।'); return; }
+    if (rawTotal === 0 && totalPrice === 0 && received === 0) {
+      alert('বিক্রি অথবা জমা টাকার অন্তত একটি হিসাব ইনপুট দিন!');
+      return;
+    }
+
+    let items = [];
+    if (fish1 || weight1 || price1) {
+      items.push({ name: fish1 || 'মাছ ১', weight: weight1 || 0, rate: rate1 || 0, price: price1 });
+    }
+    if (fish2 || weight2 || price2) {
+      items.push({ name: fish2 || 'মাছ ২', weight: weight2 || 0, rate: rate2 || 0, price: price2 });
+    }
+    if (fish3 || weight3 || price3) {
+      items.push({ name: fish3 || 'মাছ ৩', weight: weight3 || 0, rate: rate3 || 0, price: price3 });
+    }
+
+    let fishSummary = 'নগদ জমা / অগ্রিম';
+    if (items.length > 0) {
+      fishSummary = items.map(i => `${i.name} (${i.weight} কেজি @ ৳${i.rate}) = ৳${i.price}`).join(', ');
+      if (commission > 0) fishSummary += ` [কমিশন বাদ: ৳${commission}]`;
+    }
+
+    if (!customers[currentCustIndex].entries) {
+      customers[currentCustIndex].entries = [];
+    }
+
+    const fullRecord = {
+      date,
+      time: editingEntryIndex > -1 ? (customers[currentCustIndex].entries[editingEntryIndex].time || getCurrentRealTime()) : getCurrentRealTime(),
+      desc,
+      fish: fishSummary,
+      items: items,
+      rawTotal: rawTotal,
+      commission: commission,
+      totalPrice: totalPrice,
+      received: received,
+      timestamp: Date.now()
+    };
+
+    if (editingEntryIndex > -1) {
+      customers[currentCustIndex].entries[editingEntryIndex] = fullRecord;
+      editingEntryIndex = -1;
+    } else {
+      customers[currentCustIndex].entries.unshift(fullRecord);
+    }
+
+    customers[currentCustIndex].lastUpdated = Date.now();
+
+    const activeCustomer = customers.splice(currentCustIndex, 1)[0];
+    customers.unshift(activeCustomer);
+    currentCustIndex = 0;
+
+    saveYearData();
+    resetForm();
+    
+    document.getElementById('entryFormPopup').style.display = 'none';
+    
+    renderSheetTable();
+    renderCustomers();
+    updateDashboard();
+  }
+
+  function resetForm() {
+    document.getElementById('entry-fish1').value = '';
+    document.getElementById('entry-fish2').value = '';
+    document.getElementById('entry-fish3').value = '';
+    document.getElementById('entry-desc').value = '';
+    document.getElementById('entry-rate1').value = '';
+    document.getElementById('entry-rate2').value = '';
+    document.getElementById('entry-rate3').value = '';
+    document.getElementById('entry-price1').value = '';
+    document.getElementById('entry-price2').value = '';
+    document.getElementById('entry-price3').value = '';
+    document.getElementById('entry-weight1').value = '';
+    document.getElementById('entry-weight2').value = '';
+    document.getElementById('entry-weight3').value = '';
+    document.getElementById('entry-commission').value = '';
+    document.getElementById('entry-total').value = '';
+    document.getElementById('entry-received').value = '';
+    document.getElementById('entry-date').valueAsDate = new Date();
+  }
+
+  function resetCustEntryFilter() {
+    document.getElementById('cust-entry-start-date').value = '';
+    document.getElementById('cust-entry-end-date').value = '';
+    renderSheetTable();
+  }
+
+  function renderSheetTable() {
+    const cust = customers[currentCustIndex];
+    const tbody = document.getElementById('sheetTableBody');
+    tbody.innerHTML = '';
+
+    let grandTotal = 0, grandReceived = 0;
+
+    if (!cust || !cust.entries || cust.entries.length === 0) {
+      tbody.innerHTML = '<tr><td colspan="6" style="color:#888; padding:10px; background:#fff; border-radius:6px;">কোনো ডাটা পাওয়া যায়নি</td></tr>';
+    } else {
+      const startDate = document.getElementById('cust-entry-start-date').value;
+      const endDate = document.getElementById('cust-entry-end-date').value;
+
+      const filteredEntries = cust.entries.filter(item => {
+        if (!item.date) return true;
+        if (startDate && item.date < startDate) return false;
+        if (endDate && item.date > endDate) return false;
+        return true;
+      });
+
+      if (filteredEntries.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="6" style="color:#888; padding:10px; background:#fff; border-radius:6px;">নির্ধারিত তারিখের মধ্যে কোনো ডাটা পাওয়া যায়নি</td></tr>';
+      } else {
+        filteredEntries.forEach((item) => {
+          const originalIndex = cust.entries.indexOf(item);
+          const diff = item.totalPrice - item.received;
+          grandTotal += item.totalPrice;
+          grandReceived += item.received;
+
+          let diffText = '';
+          if (diff < 0) {
+            diffText = `দেনা ৳${Math.abs(diff)}`;
+          } else if (diff > 0) {
+            diffText = `পাওনা ৳${diff}`;
+          } else {
+            diffText = `৳0 (ক্লিয়ার)`;
+          }
+
+          const tr = document.createElement('tr');
+          tr.innerHTML = `
+            <td><b>${item.date}</b><span class="time-badge">⏱️ ${item.time || 'N/A'}</span></td>
+            <td style="font-weight:700;">৳${item.totalPrice}</td>
+            <td style="color:#0284c7; font-weight:700;">৳${item.received}</td>
+            <td style="color:${diff < 0 ? '#d97706' : (diff > 0 ? '#dc2626' : '#059669')}; font-weight:800;">${diffText}</td>
+            <td><button class="view-btn" onclick="openViewModal(${originalIndex})"><i class="fa-solid fa-eye"></i> ভিউ</button></td>
+            <td>
+              <select class="action-select" onchange="handleAction(this, ${originalIndex})">
+                <option value="">অপশন</option>
+                <option value="edit">✏️ এডিট</option>
+                <option value="delete">❌ ডিলিট</option>
+              </select>
+            </td>
+          `;
+          tbody.appendChild(tr);
+        });
+      }
+    }
+
+    document.getElementById('summary-total').innerText = '৳' + grandTotal;
+    document.getElementById('summary-received').innerText = '৳' + grandReceived;
+
+    const netBalance = grandTotal - grandReceived;
+    const statusBox = document.getElementById('summary-status-box');
+
+    if (netBalance < 0) {
+      statusBox.innerHTML = `দেনা: <span class="status-dena">৳${Math.abs(netBalance)}</span>`;
+    } else if (netBalance > 0) {
+      statusBox.innerHTML = `বাকি পাওনা: <span class="status-due">৳${netBalance}</span>`;
+    } else {
+      statusBox.innerHTML = `হিসাব ক্লিয়ার: <span style="color:#16a34a; font-weight:800;">৳0</span>`;
+    }
+  }
+
+  function openViewModal(index) {
+    const cust = customers[currentCustIndex];
+    const item = cust.entries[index];
+    activeViewEntry = item;
+    const modalBody = document.getElementById('viewDetailBody');
+    
+    const rawTotal = item.rawTotal || (item.items ? item.items.reduce((acc, curr) => acc + (curr.price || 0), 0) : item.totalPrice);
+    const comm = item.commission || 0;
+    const netBill = item.totalPrice;
+    const rec = item.received || 0;
+
+    let previousDue = 0;
+    const totalEntries = cust.entries.length;
+    for (let i = totalEntries - 1; i > index; i--) {
+      const pastEntry = cust.entries[i];
+      previousDue += (pastEntry.totalPrice - pastEntry.received);
+    }
+
+    const grandTotalAmount = netBill + previousDue;
+    const finalBalance = grandTotalAmount - rec;
+
+    let previousDueDisplay = previousDue >= 0 ? `৳${previousDue}` : `দেনা ৳${Math.abs(previousDue)}`;
+    let finalBalanceDisplay = '';
+    if (finalBalance > 0) {
+      finalBalanceDisplay = `<span style="color:#dc2626; font-weight:900;">বাকি পাওনা ৳${finalBalance}</span>`;
+    } else if (finalBalance < 0) {
+      finalBalanceDisplay = `<span style="color:#d97706; font-weight:900;">দেনা ৳${Math.abs(finalBalance)}</span>`;
+    } else {
+      finalBalanceDisplay = `<span style="color:#059669; font-weight:900;">ক্লিয়ার ৳0</span>`;
+    }
+
+    let itemsDetailHTML = '';
+    if (item.items && item.items.length > 0) {
+      itemsDetailHTML = item.items.map((it) => `
+        <div style="font-size:10.5px; border-bottom:1px dashed #cbd5e1; padding:2px 0;">
+          <b>${it.name}:</b> ${it.weight} কেজি @ ৳${it.rate} = <b>৳${it.price}</b>
+        </div>
+      `).join('');
+    } else {
+      itemsDetailHTML = `<div>${item.fish}</div>`;
+    }
+
+    modalBody.innerHTML = `
+      <div style="margin-bottom:6px;">
+        <b>কাস্টমার:</b> ${cust.name}<br>
+        <b>তারিখ ও সময়:</b> ${item.date} (${item.time || 'N/A'})
+      </div>
+      <hr style="margin:4px 0; border:0; border-top:1px solid #cbd5e1;">
+      <b>মাছের বিবরণ:</b><br>${itemsDetailHTML}
+      <hr style="margin:4px 0; border:0; border-top:1px solid #cbd5e1;">
+      
+      <table class="detail-calc-table">
+        <tr>
+          <td>১. মোট বিল:</td>
+          <td class="val-col">৳${rawTotal}</td>
+        </tr>
+        <tr>
+          <td>২. কমিশন:</td>
+          <td class="val-col" style="color:#dc2626;">- ৳${comm}</td>
+        </tr>
+        <tr style="background:#f1f5f9;">
+          <td><b>৩. নিট বিল:</b></td>
+          <td class="val-col" style="color:#064e3b;">৳${netBill}</td>
+        </tr>
+        <tr>
+          <td>৪. বকেয়া জের (আগের জের):</td>
+          <td class="val-col">${previousDueDisplay}</td>
+        </tr>
+        <tr style="background:#e2e8f0;">
+          <td><b>৫. সর্বমোট টাকা:</b></td>
+          <td class="val-col" style="color:#0f172a;">৳${grandTotalAmount}</td>
+        </tr>
+        <tr>
+          <td>৬. জমা:</td>
+          <td class="val-col" style="color:#0284c7;">- ৳${rec}</td>
+        </tr>
+        <tr style="background:#fef2f2; border-top: 1.5px solid #0f172a;">
+          <td><b>৭. বর্তমান বকেয়া (দেনা/পাওনা):</b></td>
+          <td class="val-col">${finalBalanceDisplay}</td>
+        </tr>
+      </table>
+      
+      ${item.desc ? `<div style="margin-top:6px;"><b>নোট:</b> ${item.desc}</div>` : ''}
+    `;
+    document.getElementById('viewDetailModal').style.display = 'flex';
+  }
+
+  function downloadVoucher() {
+    if (!activeViewEntry) return;
+
+    // Check if running inside Android APK Native Bridge
+    if (window.AndroidApp && typeof window.AndroidApp.printVoucher === 'function') {
+      window.AndroidApp.printVoucher();
+      return;
+    }
+
+    const cust = customers[currentCustIndex];
+    const custName = cust.name;
+    const custPhone = cust.phone || 'N/A';
+    const item = activeViewEntry;
+    const entryIdx = cust.entries.indexOf(item);
+    
+    const rawTotal = item.rawTotal || (item.items ? item.items.reduce((acc, curr) => acc + (curr.price || 0), 0) : item.totalPrice);
+    const comm = item.commission || 0;
+    const netBill = item.totalPrice;
+    const rec = item.received || 0;
+
+    let previousDue = 0;
+    const totalEntries = cust.entries.length;
+    for (let i = totalEntries - 1; i > entryIdx; i--) {
+      const pastEntry = cust.entries[i];
+      previousDue += (pastEntry.totalPrice - pastEntry.received);
+    }
+
+    const grandTotalAmount = netBill + previousDue;
+    const finalBalance = grandTotalAmount - rec;
+
+    let balanceLabel = "বর্তমান বকেয়া পাওনা";
+    let balanceValDisplay = `৳${finalBalance}`;
+    if (finalBalance < 0) {
+      balanceLabel = "বর্তমান বকেয়া দেনা";
+      balanceValDisplay = `৳${Math.abs(finalBalance)}`;
+    } else if (finalBalance === 0) {
+      balanceLabel = "বর্তমান বকেয়া";
+      balanceValDisplay = "৳০ (ক্লিয়ার)";
+    }
+
+    let itemsRows = '';
+    if (item.items && item.items.length > 0) {
+      itemsRows = item.items.map((it, idx) => `
+        <tr>
+          <td style="border: 1px solid #000; padding: 6px; text-align: center;">${idx + 1}</td>
+          <td style="border: 1px solid #000; padding: 6px;">${it.name}</td>
+          <td style="border: 1px solid #000; padding: 6px; text-align: center;">${it.weight} কেজি</td>
+          <td style="border: 1px solid #000; padding: 6px; text-align: right;">৳${it.rate}</td>
+          <td style="border: 1px solid #000; padding: 6px; text-align: right;">৳${it.price}</td>
+        </tr>
+      `).join('');
+    } else {
+      itemsRows = `
+        <tr>
+          <td style="border: 1px solid #000; padding: 6px; text-align: center;">1</td>
+          <td colspan="3" style="border: 1px solid #000; padding: 6px;">${item.fish}</td>
+          <td style="border: 1px solid #000; padding: 6px; text-align: right;">৳${rawTotal}</td>
+        </tr>
+      `;
+    }
+
+    const memoWindow = window.open('', '_blank');
+    memoWindow.document.write(`
+      <!DOCTYPE html>
+      <html lang="bn">
+      <head>
+        <meta charset="UTF-8">
+        <title>মেমো - ${custName}</title>
+        <style>
+          body { font-family: 'Kalpurush', 'Segoe UI', Arial, sans-serif; padding: 20px; color: #000; background: #fff; }
+          .memo-container { max-width: 480px; margin: 0 auto; border: 2px solid #064e3b; padding: 20px; border-radius: 8px; }
+          .header { text-align: center; border-bottom: 2px double #064e3b; padding-bottom: 10px; margin-bottom: 15px; }
+          .header h2 { margin: 0; color: #064e3b; font-size: 22px; }
+          .header p { margin: 2px 0; font-size: 12px; font-weight: bold; }
+          .info-grid { display: flex; justify-content: space-between; font-size: 13px; margin-bottom: 12px; }
+          table { width: 100%; border-collapse: collapse; font-size: 12px; margin-bottom: 10px; }
+          .calc-box { font-size: 13px; font-weight: bold; line-height: 1.8; margin-top: 10px; }
+          .calc-row { display: flex; justify-content: space-between; border-bottom: 1px dashed #ccc; padding: 2px 0; }
+          .footer-sign { margin-top: 45px; display: flex; justify-content: space-between; align-items: flex-end; }
+          .sign-box { border-top: 1.5px dashed #000; text-align: center; width: 120px; font-size: 12px; font-weight: bold; padding-top: 4px; }
+        </style>
+      </head>
+      <body>
+        <div class="memo-container">
+          <div class="header">
+            <h2>🐟 ঘেরের স্মার্ট খাতা Pro</h2>
+            <p>প্রফেশনাল ফিশ ফার্মিং এন্ড ট্রেডার্স</p>
+          </div>
+          <div class="info-grid">
+            <div>
+              <b>কাস্টমার:</b> ${custName}<br>
+              <b>মোবাইল:</b> ${custPhone}
+            </div>
+            <div style="text-align: right;">
+              <b>তারিখ:</b> ${item.date}<br>
+              <b>সময়:</b> ${item.time || 'N/A'}
+            </div>
+          </div>
+          <table>
+            <thead>
+              <tr style="background: #f1f5f9;">
+                <th style="border: 1px solid #000; padding: 6px; width: 8%;">নং</th>
+                <th style="border: 1px solid #000; padding: 6px;">মাছের নাম</th>
+                <th style="border: 1px solid #000; padding: 6px; width: 20%;">পরিমাণ</th>
+                <th style="border: 1px solid #000; padding: 6px; width: 18%;">দর</th>
+                <th style="border: 1px solid #000; padding: 6px; width: 22%;">মোট</th>
+              </tr>
+            </thead>
+            <tbody>${itemsRows}</tbody>
+          </table>
+          <div class="calc-box">
+            <div class="calc-row"><span>মোট বিল:</span> <span>৳${rawTotal}</span></div>
+            <div class="calc-row"><span>কমিশন বাদ:</span> <span>৳${comm}</span></div>
+            <div class="calc-row"><span>নিট বিল:</span> <span>৳${netBill}</span></div>
+            <div class="calc-row"><span>বকেয়া জের (আগের জের):</span> <span>৳${previousDue}</span></div>
+            <div class="calc-row"><span>সর্বমোট টাকা:</span> <span>৳${grandTotalAmount}</span></div>
+            <div class="calc-row"><span>আজকের জমা:</span> <span>৳${rec}</span></div>
+            <div class="calc-row" style="border-top:1.5px solid #000; margin-top:4px; padding-top:4px;"><span>${balanceLabel}:</span> <span>${balanceValDisplay}</span></div>
+            ${item.desc ? `<div class="calc-row"><span>নোট:</span> <span>${item.desc}</span></div>` : ''}
+          </div>
+          <div class="footer-sign">
+            <div></div>
+            <div class="sign-box">স্বাক্ষর</div>
+          </div>
+        </div>
+        <script>window.onload = function() { window.print(); }<\/script>
+      </body>
+      </html>
+    `);
+    memoWindow.document.close();
+  }
+
+  async function handleAction(selectEl, index) {
+    const val = selectEl.value;
+    if (val === 'edit') {
+      const pass = prompt("এডিট করতে পাসওয়ার্ড দিন:");
+      if (pass !== null) {
+        const inputHash = await hashPassword(pass);
+        if (inputHash === adminPasswordHash) {
+          editingEntryIndex = index;
+          const item = customers[currentCustIndex].entries[index];
+          document.getElementById('entry-date').value = item.date;
+          document.getElementById('entry-desc').value = item.desc || '';
+          document.getElementById('entry-commission').value = item.commission || '';
+          document.getElementById('entry-total').value = item.totalPrice;
+          document.getElementById('entry-received').value = item.received;
+          toggleEntryModal();
+        } else {
+          alert("ভুল পাসওয়ার্ড!");
+        }
+      }
+    } else if (val === 'delete') {
+      const pass = prompt("এন্ট্রি ডিলিট করতে পাসওয়ার্ড দিন:");
+      if (pass !== null) {
+        const inputHash = await hashPassword(pass);
+        if (inputHash === adminPasswordHash) {
+          customers[currentCustIndex].entries.splice(index, 1);
+          saveYearData();
+          renderSheetTable();
+          renderCustomers();
+          updateDashboard();
+          alert("এন্ট্রি সফলভাবে ডিলিট হয়েছে!");
+        } else {
+          alert("ভুল পাসওয়ার্ড!");
+        }
+      }
+    }
+    selectEl.value = '';
+  }
+
+  async function handleCustomerAction(selectEl, index, event) {
+    if(event) event.stopPropagation();
+    const val = selectEl.value;
+    if (val === 'edit_customer') {
+      const pass = prompt("কাস্টমার তথ্য এডিট করতে পাসওয়ার্ড দিন:");
+      if (pass !== null) {
+        const inputHash = await hashPassword(pass);
+        if (inputHash === adminPasswordHash) {
+          const newName = prompt("নতুন নাম লিখুন:", customers[index].name);
+          if (newName && newName.trim() !== '') {
+            const newPhone = prompt("নতুন মোবাইল নম্বর লিখুন:", customers[index].phone || '');
+            customers[index].name = newName.trim();
+            customers[index].phone = newPhone ? newPhone.trim() : '';
+            saveYearData();
+            renderCustomers();
+            alert("কাস্টমার তথ্য আপডেট হয়েছে!");
+          }
+        } else {
+          alert("ভুল পাসওয়ার্ড!");
+        }
+      }
+    } else if (val === 'delete_customer') {
+      const pass = prompt("সম্পূর্ণ কাস্টমার খাতা ডিলিট করতে পাসওয়ার্ড দিন:");
+      if (pass !== null) {
+        const inputHash = await hashPassword(pass);
+        if (inputHash === adminPasswordHash) {
+          if (confirm(`আপনি কি নিশ্চিত যে "${customers[index].name}"-এর সম্পূর্ণ খাতা মুছে ফেলবেন?`)) {
+            customers.splice(index, 1);
+            saveYearData();
+            renderCustomers();
+            updateDashboard();
+            alert("কাস্টমার খাতা ডিলিট করা হয়েছে!");
+          }
+        } else {
+          alert("ভুল পাসওয়ার্ড!");
+        }
+      }
+    }
+    selectEl.value = '';
+  }
+
+  function getCustTotals(cust, startDate = '', endDate = '') {
+    let sale = 0, rec = 0;
+    if (cust.entries) {
+      cust.entries.forEach(e => {
+        let match = true;
+        if (startDate && e.date < startDate) match = false;
+        if (endDate && e.date > endDate) match = false;
+
+        if (match) {
+          sale += parseFloat(e.totalPrice || 0);
+          rec += parseFloat(e.received || 0);
+        }
+      });
+    }
+    return { sale, rec, net: sale - rec };
+  }
+
+  function renderCustomers() {
+    filterCustomers();
+  }
+
+  function filterCustomers() {
+    const container = document.getElementById('customerContainer');
+    container.innerHTML = '';
+
+    if (customers.length === 0) {
+      container.innerHTML = `<p style="text-align:center; color:#888; padding: 15px; font-size:12px;">কোনো খাতা নেই। ওপরের বাটনে ক্লিক করে নতুন খাতা তৈরি করুন।</p>`;
+      updateCustomerOverview(0, 0, 0);
+      return;
+    }
+
+    const q = document.getElementById('popup-search').value.toLowerCase();
+    const sortVal = document.getElementById('listSorter').value;
+    const startDate = document.getElementById('filter-start-date').value;
+    const endDate = document.getElementById('filter-end-date').value;
+
+    let filtered = customers.filter(c => {
+      const nameMatch = c.name.toLowerCase().includes(q);
+      const phoneMatch = (c.phone || '').includes(q);
+
+      let dateMatch = true;
+      if (startDate || endDate) {
+        dateMatch = (c.entries || []).some(e => {
+          if (!e.date) return false;
+          if (startDate && e.date < startDate) return false;
+          if (endDate && e.date > endDate) return false;
+          return true;
+        });
+      }
+
+      return (nameMatch || phoneMatch) && dateMatch;
+    });
+
+    if (sortVal === 'due') {
+      filtered = filtered.filter(c => getCustTotals(c, startDate, endDate).net > 0);
+    } else if (sortVal === 'advance') {
+      filtered = filtered.filter(c => getCustTotals(c, startDate, endDate).net < 0);
+    } else if (sortVal === 'clear') {
+      filtered = filtered.filter(c => getCustTotals(c, startDate, endDate).net === 0);
+    }
+
+    filtered.sort((a, b) => {
+      const totA = getCustTotals(a, startDate, endDate);
+      const totB = getCustTotals(b, startDate, endDate);
+
+      if (sortVal === 'due') return totB.net - totA.net;
+      if (sortVal === 'advance') return totA.net - totB.net;
+      if (sortVal === 'sales') return totB.sale - totA.sale;
+      if (sortVal === 'clear') return Math.abs(totA.net) - Math.abs(totB.net);
+      return (b.lastUpdated || 0) - (a.lastUpdated || 0);
+    });
+
+    let overallSale = 0, overallRec = 0;
+
+    if (filtered.length === 0) {
+      container.innerHTML = `<p style="text-align:center; color:#888; padding: 15px; font-size:12px;">নির্ধারিত ফিল্টারে কোনো কাস্টমার ডাটা পাওয়া যায়নি</p>`;
+      updateCustomerOverview(0, 0, 0);
+      return;
+    }
+
+    filtered.forEach((cust, index) => {
+      const tot = getCustTotals(cust, startDate, endDate);
+      overallSale += tot.sale;
+      overallRec += tot.rec;
+
+      let statusLabel = '';
+      let statusValClass = '';
+      let statusValText = '';
+
+      if (tot.net > 0) {
+        statusLabel = 'বাকি পাওনা';
+        statusValClass = 'val-powna';
+        statusValText = `৳${tot.net}`;
+      } else if (tot.net < 0) {
+        statusLabel = 'দেনা';
+        statusValClass = 'val-dena';
+        statusValText = `৳${Math.abs(tot.net)}`;
+      } else {
+        statusLabel = 'হিসাব ক্লিয়ার';
+        statusValClass = 'val-clear';
+        statusValText = '৳0';
+      }
+
+      const origIdx = customers.indexOf(cust);
+      const cardBgGradient = CARD_COLORS[index % CARD_COLORS.length];
+      
+      let phoneDisplay = '<span style="font-size:11px; color:#cbd5e1;">নম্বর নেই</span>';
+      if (cust.phone) {
+        phoneDisplay = `
+          <div class="khata-phone-container">
+            <a href="tel:${cust.phone}" class="call-btn-icon" title="কল করুন">
+              <i class="fa-solid fa-phone">📞</i>
+            </a>
+            <span class="khata-customer-phone-text">${cust.phone}</span>
+          </div>
+        `;
+      }
+
+      const card = document.createElement('div');
+      card.className = 'khata-ledger-card';
+      card.style.background = cardBgGradient;
+      
+      card.innerHTML = `
+        <div class="khata-card-top">
+          <div class="khata-header-info">
+            <div class="profile-img-box" onclick="triggerImageUpload(${origIdx}, event)" title="ছবি যোগ/পরিবর্তন করুন">
+              <img src="${cust.image || DEFAULT_AVATAR}">
+            </div>
+            <div style="min-width: 0; flex: 1;">
+              <span class="khata-customer-name">${cust.name}</span>
+              ${phoneDisplay}
+            </div>
+          </div>
+          
+          <button class="enter-file-btn" onclick="openKhataView(${origIdx})">
+            এন্টার <i class="fa-solid fa-arrow-right">➔</i>
+          </button>
+          
+          <div class="balance-badge-box">
+            <div class="right-info-line">মোট বিক্রয়: <b>৳${tot.sale}</b></div>
+            <div class="right-info-line">মোট জমা: <b>৳${tot.rec}</b></div>
+            <div class="right-info-line">${statusLabel}: <b class="${statusValClass}">${statusValText}</b></div>
+            
+            <select class="card-action-select" onclick="event.stopPropagation()" onchange="handleCustomerAction(this, ${origIdx}, event)">
+              <option value="">⚙️...</option>
+              <option value="edit_customer">✏️ এডিট</option>
+              <option value="delete_customer">❌ ডিলিট</option>
+            </select>
+          </div>
+        </div>
+      `;
+      container.appendChild(card);
+    });
+
+    updateCustomerOverview(overallSale, overallRec, overallSale - overallRec);
+  }
+
+  function updateCustomerOverview(sale, rec, due) {
+    document.getElementById('total-cust-sale').innerText = '৳' + sale;
+    document.getElementById('total-cust-received').innerText = '৳' + rec;
+    
+    const statusLbl = document.getElementById('total-cust-status-lbl');
+    const statusVal = document.getElementById('total-cust-due');
+    
+    if (due < 0) {
+      statusLbl.innerText = "দেনা:";
+      statusVal.style.color = "#fde047";
+      statusVal.innerText = '৳' + Math.abs(due);
+    } else {
+      statusLbl.innerText = "বাকি:";
+      statusVal.style.color = "#fca5a5";
+      statusVal.innerText = '৳' + due;
+    }
+  }
+
+  function applyDateFilter() {
+    document.getElementById('datePanel').style.display = 'none';
+    filterCustomers();
+  }
+
+  function resetDateFilter() {
+    document.getElementById('filter-start-date').value = '';
+    document.getElementById('filter-end-date').value = '';
+    document.getElementById('datePanel').style.display = 'none';
+    filterCustomers();
+  }
+
+  function openKhataView(index) {
+    currentCustIndex = index;
+    const cust = customers[index];
+    document.getElementById('khata-title').innerText = `${cust.name}-এর খাতা`;
+    document.getElementById('customerKhataView').style.display = 'flex';
+    resetCustEntryFilter();
+  }
+
+  function updateDashboard() {
+    loadYearData();
+    let grandTotalSale = 0, grandTotalReceived = 0;
+    customers.forEach(c => {
+      if (c.entries) {
+        c.entries.forEach(e => {
+          grandTotalSale += parseFloat(e.totalPrice || 0);
+          grandTotalReceived += parseFloat(e.received || 0);
+        });
+      }
+    });
+
+    let sumExp = (expenses.general || []).reduce((sum, item) => sum + (item.amount || 0), 0);
+    let sumPona = (expenses.pona || []).reduce((sum, item) => sum + (item.amount || 0), 0);
+    let sumHari = (expenses.hari || []).reduce((sum, item) => sum + (item.amount || 0), 0);
+    let totalExpenses = sumExp + sumPona + sumHari;
+
+    document.getElementById('sum-sale').innerText = '৳ ' + grandTotalSale;
+    document.getElementById('sum-received').innerText = '৳ ' + grandTotalReceived;
+    document.getElementById('sum-due').innerText = '৳ ' + (grandTotalSale - grandTotalReceived);
+    document.getElementById('sum-exp').innerText = '৳ ' + sumExp;
+    document.getElementById('sum-pona').innerText = '৳ ' + sumPona;
+    document.getElementById('sum-hari').innerText = '৳ ' + sumHari;
+    
+    let netProfit = grandTotalSale - totalExpenses;
+    document.getElementById('sum-balance').innerText = '৳ ' + netProfit;
+  }
+
+  function openNewKhataModal() { 
+    document.getElementById('cust-name').value = '';
+    document.getElementById('cust-phone').value = '';
+    document.getElementById('newKhataModal').style.display = 'flex'; 
+  }
+  
+  function saveNewKhata() {
+    const name = document.getElementById('cust-name').value.trim();
+    const phone = document.getElementById('cust-phone').value.trim();
+    if (!name) { alert('নাম দেওয়া আবশ্যক'); return; }
+    customers.unshift({ name, phone, image: '', entries: [], lastUpdated: Date.now() });
+    saveYearData();
+    closeSmallModal('newKhataModal');
+    renderCustomers();
+    updateDashboard();
+  }
+
+  populateYearDropdown();
+  loadOwnerProfile();
+  loadYearData();
+  updateDashboard();
+  document.getElementById('entry-date').valueAsDate = new Date();
+</script>
+
+</body>
+</html>
