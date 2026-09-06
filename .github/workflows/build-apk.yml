@@ -1,0 +1,45 @@
+name: Build Gher Smart Khata APK
+
+on:
+  push:
+    branches: [ "main", "master" ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    name: Build Android APK
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
+      - name: Setup Android SDK
+        uses: android-actions/setup-android@v3
+
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v3
+
+      - name: Make Gradlew Executable
+        run: chmod +x gradlew || true
+
+      - name: Build Debug APK
+        run: gradle assembleDebug --stacktrace
+
+      - name: Locate and Prepare APK
+        run: |
+          mkdir -p output-apk
+          find . -name "*debug.apk" -exec cp {} output-apk/Gher-Smart-Khata-Pro.apk \;
+
+      - name: Upload APK Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: Gher-Smart-Khata-Pro-APK
+          path: output-apk/Gher-Smart-Khata-Pro.apk
+          retention-days: 30
